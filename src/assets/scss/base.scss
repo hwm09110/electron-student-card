@@ -1,0 +1,29 @@
+
+// px 减半
+@function px2half($px){
+  @return $px / 2;
+}
+
+//背景图
+@mixin backgroundImage($width,$height){
+  width: $width;
+  height: $height;
+  background-size: $width $height;
+}
+
+//bottom shadow
+@mixin  bottomShadow {
+  box-shadow: 0 1px 15px 1px rgba(0,0,0,0.06);
+}
+
+//公共按钮
+@mixin  blueButton($width:600px, $height:80px, $bgcolor:#47aefe, $color:#fff, $fontSize:32px) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  text-align: center;
+  background-color: $bgcolor;
+  font-size: $fontSize;
+  color: $color;
+  border-radius: 40px;
+}
