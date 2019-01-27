@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '../views/Index'
 import NowLocation from '../views/NowLocation'
+import DeviceInfo from '../views/DeviceInfo'
 
 Vue.use(Router)
 
@@ -51,6 +52,26 @@ export default new Router({
       path: '/addwhitephone',
       name: 'addwhitephone',
       component: () => import(/* webpackChunkName: "whiteList" */ '../views/AddWhitePhone.vue')
+    },
+    {
+      path: '/bandisturb',
+      name: 'bandisturb',
+      component: () => import(/* webpackChunkName: "bandisturb" */ '../views/BanDisturb.vue')
+    },
+    {
+      path: '/setbandisturb',
+      name: 'setbandisturb',
+      component: () => import(/* webpackChunkName: "bandisturb" */ '../views/SetBanDisturb.vue')
+    },
+    {
+      path: '/sos',
+      name: 'sos',
+      component: () => import(/* webpackChunkName: "bandisturb" */ '../views/Sos.vue')
+    },
+    {
+      path: '/deviceinfo',
+      name: 'deviceinfo',
+      component: DeviceInfo
     }
   ]
 })

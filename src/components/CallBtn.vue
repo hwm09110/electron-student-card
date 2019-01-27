@@ -17,7 +17,7 @@ export default {
 @import "@/assets/scss/base.scss";
 //呼叫按钮
 .call-btn{
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 50px;
   transform: translateX(-50%);

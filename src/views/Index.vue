@@ -34,7 +34,6 @@
 <script>
 // @ is an alias to /src
 import CallBtn from '@c/CallBtn'
-// import Business from '@/views/Business'
 // import { Icon, TabItem,} from 'vux'
 
 export default {
@@ -63,15 +62,15 @@ export default {
         },
         {
           text: '免打扰设置',
-          routeName: ''
+          routeName: 'bandisturb'
         },
         {
           text: 'SOS呼救',
-          routeName: ''
+          routeName: 'sos'
         },
         {
           text: '设备信息',
-          routeName: ''
+          routeName: 'deviceinfo'
         },
       ]
     }

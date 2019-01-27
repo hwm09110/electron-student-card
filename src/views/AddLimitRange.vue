@@ -3,57 +3,54 @@
     <div class="form-box">
       <div class="item-box">
         <span class="label">区域名称</span>
-        <input type="text" placeholder="请输入区域名称">
+        <input type="text" placeholder="请输入区域名称" v-model="formData.name">
       </div>
       <div class="item-box">
         <span class="label">经度信息</span>
-        <input type="text" placeholder="请输入地图经度信息">
+        <input type="text" placeholder="请输入地图经度信息" v-model="formData.lng" readonly @click="handleInputClick">
       </div>
       <div class="item-box">
         <span class="label">纬度信息</span>
-        <input type="text" placeholder="请输入地图纬度信息">
+        <input type="text" placeholder="请输入地图纬度信息" v-model="formData.lat" readonly @click="handleInputClick">
       </div>
       <div class="item-box">
         <span class="label">半径范围</span>
-        <input type="number" placeholder="请输入数字">
+        <input type="number" placeholder="请输入数字" v-model="formData.radius">
       </div>
     </div>
     <footer class="footer-wrap">
       <button class="add-btn" @click="handelSave">保存</button>
     </footer>
+    <choose-map-pos :show.sync="show" @on-sure="handleSurePoint"></choose-map-pos>
   </div>
 </template>
 
 <script>
+import ChooseMapPos from '@c/ChooseMapPos'
 export default {
   name: 'addLimitRange',
   components: {
+    ChooseMapPos
   },
   data () {
     return {
-      listData: [
-        {
-          name: '电子围栏名称1',
-          lng: '23.1583810000',
-          lat: '113.4431300000',
-          radius: 500
-        },
-        {
-          name: '电子围栏名称2',
-          lng: '23.1583810000',
-          lat: '113.4431300000',
-          radius: 500
-        },
-        {
+      formData: {
           name: '电子围栏名称3',
-          lng: '23.1583810000',
-          lat: '113.4431300000',
+          lng: '23.1583810000', //经度
+          lat: '113.4431300000', //纬度
           radius: 500
-        }
-      ]
+      },
+      show: false
     }
   },
   methods: {
+    handleInputClick () {
+      this.show = true;
+    },
+    handleSurePoint (point) {
+      this.formData.lng = point.lng
+      this.formData.lat = point.lat
+    },
     handelSave () {
       this.$router.push({name:'setlimitrange'})
     }
