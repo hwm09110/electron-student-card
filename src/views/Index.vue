@@ -22,7 +22,7 @@
       <div class="title">全部功能</div>
       <ul class="app-list-box">
         <li v-for="(app,index) of appList" :key="index" @click="handleAppClick(app)">
-          <div class="icon"></div>
+          <div class="icon" :class="app.icon"></div>
           <div class="name">{{app.text}}</div>
         </li>
       </ul>
@@ -46,30 +46,37 @@ export default {
       appList: [
         {
           text: '实时定位',
+          icon: 'location',
           routeName: 'nowlocation'
         },
         {
           text: '亲情号码',
+          icon: 'relphone',
           routeName: 'relphone'
         },
         {
           text: '电子围栏',
+          icon: 'limitrange',
           routeName: 'limitrange'
         },
         {
           text: '白名单设置',
+          icon: 'whitelist',
           routeName: 'whitelist'
         },
         {
           text: '免打扰设置',
+          icon: 'disturb',
           routeName: 'bandisturb'
         },
         {
           text: 'SOS呼救',
+          icon: 'sos',
           routeName: 'sos'
         },
         {
           text: '设备信息',
+          icon: 'device',
           routeName: 'deviceinfo'
         },
       ]
@@ -226,11 +233,31 @@ export default {
        margin-right: 45px;
        margin-bottom: 36px;
        .icon{
-        width: 100px;
-        height: 100px;
-        border:1px solid #eee;
-        border-radius: 10px;
+        width: 118px;
+        height: 118px;
         margin: 0 auto;
+        background-size: 118px 118px;
+        &.location{
+          background-image: url('../assets/img/icon-location.png');
+        }
+        &.relphone{
+          background-image: url('../assets/img/icon-relphone.png');
+        }
+        &.limitrange{
+          background-image: url('../assets/img/icon-limitrange.png');
+        }
+        &.whitelist{
+          background-image: url('../assets/img/icon-whitelist.png');
+        }
+        &.disturb{
+          background-image: url('../assets/img/icon-disturb.png');
+        }
+        &.sos{
+          background-image: url('../assets/img/icon-sos.png');
+        }
+        &.device{
+          background-image: url('../assets/img/icon-device.png');
+        }
        }
        .name{
          font-size: 24px;

@@ -7,7 +7,7 @@
       </div>
       <div class="item-box">
         <span class="label">亲情号码</span>
-        <input type="text" placeholder="请输入手机号码">
+        <input type="number" placeholder="请输入手机号码">
       </div>
     </div>
     <footer class="footer-wrap">

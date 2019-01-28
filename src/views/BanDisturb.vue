@@ -7,7 +7,7 @@
       <li class="item-box" v-for="(item,index) of listData" :key="index">
         <div class="name-box">
           <h2 class="name">{{item.name}}</h2>
-          <div class="switch-btn">
+          <div :class="['switch-btn',{on:item.active}]" @click="item.active = !item.active">
               <div class="circle"></div>
           </div>
         </div>
@@ -34,11 +34,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import Tab from '@c/Tab'
-// import Business from '@/views/Business'
-// import { Icon, TabItem,} from 'vux'
-
 export default {
   name: 'banDisturb',
   components: {
@@ -50,7 +45,8 @@ export default {
           name: '免打扰时间段',
           am: '08:00-11:30',
           pm: '14:00-17:30',
-          mode: '周一至周五'
+          mode: '周一至周五',
+          active: true
         }
       ]
     }

@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     handelSave () {
-      this.$router.push({name:'relphone'})
+      this.$router.push({name:'whitelist'})
     }
   }
 }

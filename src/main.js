@@ -6,8 +6,8 @@ import store from './store/index'
 // 百度地图 https://dafrok.github.io/vue-baidu-map/#/
 import BaiduMap from 'vue-baidu-map'
 
-import '@/assets/css/reset.css'
 // import 'lib-flexible'
+import '@/assets/css/reset.css'
 import setRem from '@/assets/js/rem.js'
 
 setRem();
@@ -19,6 +19,10 @@ Vue.use(BaiduMap, {
   ak: '2q9dwhAGGA8krEGuA9bw4TzegdXTQ6bE'
 })
 
+import { DatetimePicker,Popup } from 'vant';
+
+Vue.use(DatetimePicker);
+Vue.use(Popup);
 
 new Vue({
   router,

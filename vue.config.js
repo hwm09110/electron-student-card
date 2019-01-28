@@ -1,9 +1,9 @@
 const path = require('path');
-const vuxLoader = require('vux-loader');
+// const vuxLoader = require('vux-loader');
 let isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    baseUrl: '/', //vueConf.baseUrl, // 根域上下文目录
+    publicPath: '/', //vueConf.baseUrl, // 根域上下文目录
     outputDir: 'dist', // 构建输出目录
     assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
     lintOnSave: false, // 是否开启eslint保存检测，有效值：ture | false | 'error'
@@ -15,9 +15,10 @@ module.exports = {
             config.devtool = 'cheap-module-eval-source-map'
         } else { // 生产环境配置
         }
-        vuxLoader.merge(config, {
-            plugins: ['vux-ui']
-        });
+        //配置vux库
+        // vuxLoader.merge(config, {
+        //     plugins: ['vux-ui']
+        // });
         Object.assign(config, { // 开发生产共同配置
             resolve: {
                 extensions: ['.js', '.vue', '.json', '.scss'],
@@ -55,7 +56,8 @@ module.exports = {
     },
     devServer: {
         open: false,
-        host: '192.168.0.101',
+        host: '192.168.8.172',
+        // host: '192.168.0.101',
         // host: '127.0.0.1',
         port: 9000,
         https: false,

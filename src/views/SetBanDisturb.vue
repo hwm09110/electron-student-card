@@ -12,7 +12,7 @@
         <div class="options-content">
           <div class="option" v-for="(option,j) of item.options" :key="j">
             <span class="label">{{option.label}}</span>
-            <span class="value">{{option.time}}</span>
+            <span class="value" @click="handleSelectTime(option)">{{option.time}}</span>
           </div>
         </div>
       </li>
@@ -26,6 +26,14 @@
     <footer class="footer-wrap">
       <button class="add-btn" @click="handleSet">设置</button>
     </footer>
+    <van-popup v-model="show" position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="time"
+        @confirm="handleDateTimeConfirm"
+        @cancel="handleDateTimeCancel"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -72,13 +80,28 @@ export default {
               
           ]
         }
-      ]
+      ],
+      currentDate:'00:00',
+      show:false, //显示时间选择控件
+      selectOption:'' //点击当前时间的项
     }
   },
   methods: {
     handleSet () {
       console.log(21);
     //   this.$router.push({name:'addlimitrange'});
+    },
+    handleSelectTime (option) {
+      this.show = true;
+      this.selectOption = option;
+    },
+    handleDateTimeConfirm (value) {
+      console.log(value);
+      this.selectOption.time = value;
+      this.show = false;
+    },
+    handleDateTimeCancel () {
+      this.show = false;
     }
   }
 }

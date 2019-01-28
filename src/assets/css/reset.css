@@ -19,7 +19,7 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 12px;
+	font-size: 34px;
 	font-family: Microsoft Yahei,Tahoma,hiragino sans gb,Helvetica,Arial,sans-serif;
 	vertical-align: baseline;
 	-webkit-tap-highlight-color:rgba(255,0,0,0);
@@ -54,5 +54,6 @@ input{
 }
 button{
 	border: none;
-  outline: none;
+	outline: none;
+	padding: 0;
 }
