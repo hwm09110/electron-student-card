@@ -8,7 +8,7 @@ export default function setRem(){
           htmlElem = docElem.documentElement;
 
       var doc_width = htmlElem.getBoundingClientRect().width;
-          doc_width = doc_width > 500?500:doc_width;
+          doc_width = doc_width > 750?750:doc_width;
       var htmlFontSize = doc_width / 10;
       htmlElem.setAttribute('style','font-size:'+htmlFontSize+'px');
     }

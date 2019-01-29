@@ -264,6 +264,7 @@ export default {
          color: #333;
          margin-top: 15px;
          text-align: center;
+         line-height: 1.4;
        }
        &:nth-child(4n){
         margin-right: 0;

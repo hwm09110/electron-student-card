@@ -10,4 +10,8 @@
     height: 100%;
     background-color: #efeff4;
   }
+  #app{
+    max-width: 750px;
+    margin: auto;
+  }
 </style>
