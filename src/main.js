@@ -19,6 +19,7 @@ Vue.use(BaiduMap, {
   ak: '2q9dwhAGGA8krEGuA9bw4TzegdXTQ6bE'
 })
 
+//https://youzan.github.io/vant/#/zh-CN/intro
 import { DatetimePicker,Popup } from 'vant';
 
 Vue.use(DatetimePicker);
