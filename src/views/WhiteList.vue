@@ -82,11 +82,13 @@ export default {
       @include bottomShadow;
       .left-box{
         .rel-name{
+          font-weight: 700;
           font-size: 36px;
           color: #333;
           margin: 0 5px;
         }
         .rel-phone{
+          font-weight: 700;
           font-size: 36px;
           color: #47aefe;
           margin-top: 15px;

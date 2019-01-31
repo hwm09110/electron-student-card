@@ -36,6 +36,12 @@ module.exports = {
         } else {
             // 生产开发配置
         }
+        // 这里是对环境的配置，不同环境对应不同的BASE_URL，以便axios的请求地址不同
+        config.plugin('define').tap(args => {
+            // console.log(process.env.BASE_URL)
+            args[0]['process.env'].BASE_URL = JSON.stringify(process.env.BASE_URL)
+            return args
+        })
     },
     css: { // 配置高于chainWebpack中关于css loader的配置
         modules: false, // 是否开启支持‘foo.module.css’样式

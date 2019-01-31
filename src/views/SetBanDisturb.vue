@@ -19,19 +19,31 @@
       <li class="item-box">
         <div class="name-box">
           <h2 class="name">重复</h2>
-          <div class="arrow-btn">周一至周五</div>
+          <div class="arrow-btn" @click="handleSelectWeek">周一至周五</div>
         </div>
       </li>
     </ul>
     <footer class="footer-wrap">
       <button class="add-btn" @click="handleSet">设置</button>
     </footer>
-    <van-popup v-model="show" position="bottom">
+
+    <!-- 选择时间 -->
+    <van-popup v-model="showChooseTime" position="bottom">
       <van-datetime-picker
         v-model="currentDate"
         type="time"
         @confirm="handleDateTimeConfirm"
         @cancel="handleDateTimeCancel"
+      />
+    </van-popup>
+
+    <!-- 选择周几 -->
+    <van-popup v-model="showChooseWeek" position="bottom">
+      <van-picker
+        :show-toolbar = "true" 
+        :columns="weekColumns"
+        @confirm="handleWeekConfirm"
+        @cancel="handleWeekCancel"
       />
     </van-popup>
   </div>
@@ -81,9 +93,14 @@ export default {
           ]
         }
       ],
-      currentDate:'00:00',
-      show:false, //显示时间选择控件
-      selectOption:'' //点击当前时间的项
+      currentDate: '00:00',
+      showChooseTime: false, //显示时间选择控件
+      selectOption: '', //点击当前时间的项
+      showChooseWeek: false,
+      weekColumns: [
+        {values:['周一','周二','周三','周四','周五','周六','周日',]},
+        {values:['周一','周二','周三','周四','周五','周六','周日',]}
+      ]
     }
   },
   methods: {
@@ -92,17 +109,27 @@ export default {
     //   this.$router.push({name:'addlimitrange'});
     },
     handleSelectTime (option) {
-      this.show = true;
+      this.showChooseTime = true;
       this.selectOption = option;
     },
     handleDateTimeConfirm (value) {
       console.log(value);
       this.selectOption.time = value;
-      this.show = false;
+      this.showChooseTime = false;
     },
     handleDateTimeCancel () {
-      this.show = false;
-    }
+      this.showChooseTime = false;
+    },
+    handleSelectWeek () {
+      this.showChooseWeek = true;
+    },
+    handleWeekConfirm (value) {
+      console.log(value);
+      this.showChooseWeek = false;
+    },
+    handleWeekCancel () {
+      this.showChooseWeek = false;
+    },
   }
 }
 </script>

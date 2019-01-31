@@ -177,7 +177,8 @@ export default {
                 display: inline-block;
                 @include backgroundImage(20px,24px);
                 background-image: url('../assets/img/location_white.png');
-                margin-top: -5px;
+                margin-top: -2px;
+                margin-right: 2px;
                 vertical-align: middle;
             }
             .text{

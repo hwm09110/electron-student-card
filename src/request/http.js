@@ -1,24 +1,18 @@
+import Vue from 'vue';
+import router from '../router/index'
 import axios from 'axios';
 import qs from 'qs';
-import Vue from 'vue';
 
-let baseURL = '';
-if(process.env.NODE_ENV === 'development'){
-  baseURL = '/';
-}else if(process.env.NODE_ENV === 'production'){
-  baseURL = 'http://113.108.217.90';
-}
-
-const Axios = axios.create({ 
-  baseURL: baseURL, // 因为我本地做了反向代理 
-  timeout: 10000, 
+const service = axios.create({ 
+  baseURL: process.env.BASE_URL, // 因为我本地做了反向代理 
+  timeout: 60000, 
   responseType: "json",
   withCredentials: true, // 是否允许带cookie这些 
   headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" } 
 });
 
 //添加请求拦截器 
-Axios.interceptors.request.use( config => { 
+service.interceptors.request.use( config => { 
   // 在发送请求之前做某件事 
   if ( config.method === "post" ) { 
     // 序列化 
@@ -40,7 +34,7 @@ Axios.interceptors.request.use( config => {
 
 
 //添加相应拦截器
-Axios.interceptors.response.use(res => {
+service.interceptors.response.use(res => {
   console.log(res);
   //非登录下
   if(res.data && res.data.code === '9000'){
@@ -48,6 +42,23 @@ Axios.interceptors.response.use(res => {
   }
   return res;
 },error => {
+  // 服务器返回不是 2 开头的情况，会进入这个回调
+  // 可以根据后端返回的状态码进行不同的操作
+  const responseCode = error.response.status;
+
+  // 断网 或者 请求超时 状态
+  if (!error.response) {
+    // 请求超时状态
+    if (error.message.includes('timeout')) {
+      console.log('请求超时，请检查网络是否连接正常');
+    } else {
+      // 可以展示断网组件
+      console.log('断网了');
+      // Message.error('请求失败，请检查网络是否已连接')
+    }
+    return
+  }
+
   return Promise.reject(error);
 });
 
