@@ -41,7 +41,40 @@ module.exports = {
             // console.log(process.env.BASE_URL)
             args[0]['process.env'].BASE_URL = JSON.stringify(process.env.BASE_URL)
             return args
-        })
+        });
+
+        //【第三方库引用cdn】对于 vue、vue-router、vuex、axios等等这些不经常改动的库、我们让webpack不对他们进行打包，通过cdn引入
+        if (process.env.NODE_ENV === 'production') {
+            var externals = {
+                vue: 'Vue',
+                axios: 'axios',
+                vuex: 'Vuex',
+                'vue-router': 'VueRouter'
+            };
+            config.externals(externals);
+            const cdn = {
+                css: [
+                    // vant css 注：引用cdn资源 [//]开头可以自动适配 http和https
+                    '//cdn.jsdelivr.net/npm/vant@1.5.7/lib/index.css'
+                ],
+                js: [
+                    // vue
+                    '//cdn.staticfile.org/vue/2.5.21/vue.min.js',
+                    // vue-router
+                    '//cdn.staticfile.org/vue-router/3.0.1/vue-router.min.js',
+                    // vuex
+                    '//cdn.staticfile.org/vuex/3.1.0/vuex.min.js',
+                    // axios
+                    '//cdn.staticfile.org/axios/0.18.0/axios.min.js',
+                    // vant js
+                    '//cdn.jsdelivr.net/npm/vant@1.5.7/lib/vant.min.js'
+                ]
+            };
+            config.plugin('html').tap(args => {
+                args[0].cdn = cdn
+                return args
+            });
+        }
     },
     css: { // 配置高于chainWebpack中关于css loader的配置
         modules: false, // 是否开启支持‘foo.module.css’样式
