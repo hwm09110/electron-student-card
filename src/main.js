@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router/index'
-import store from './store/index'
+import App from './App'
+import router from './router'
+import store from './store'
 
 // 百度地图 https://dafrok.github.io/vue-baidu-map/#/
 import BaiduMap from 'vue-baidu-map'
