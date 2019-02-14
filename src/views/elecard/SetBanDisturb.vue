@@ -175,7 +175,7 @@ export default {
             &.checked{
                 border:none;
                 background-size: 36px 36px;
-                background-image: url('../assets/img/radio-checked.png');
+                background-image: url('../../assets/img/radio-checked.png');
             }
         }
         .arrow-btn{
@@ -190,7 +190,7 @@ export default {
                 transform: translateY(-50%);
                 content: '';
                 @include backgroundImage(12px,20px);
-                background-image: url('../assets/img/arrow.png');
+                background-image: url('../../assets/img/arrow.png');
             }
         }
       }
@@ -221,7 +221,7 @@ export default {
                 transform: translateY(-50%);
                 content: '';
                 @include backgroundImage(12px,20px);
-                background-image: url('../assets/img/arrow.png');
+                background-image: url('../../assets/img/arrow.png');
             }
           }
         }

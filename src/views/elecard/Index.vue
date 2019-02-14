@@ -108,7 +108,7 @@ export default {
    width: 740px;
    height: 340px;
    background-size: 740px 340px;
-   background-image: url('../assets/img/card_bg.png');
+   background-image: url('../../assets/img/card_bg.png');
    position: relative;
    color: #fff;
    margin-left: -20px;
@@ -148,7 +148,7 @@ export default {
        width: 20px;
        height: 24px;
        background-size: 20px 24px;
-       background-image: url('../assets/img/location_white.png');
+       background-image: url('../../assets/img/location_white.png');
      }
    }
  }
@@ -173,38 +173,38 @@ export default {
        font-size: 28px;
    }
    .device-status{
-     background-image: url('../assets/img/tab-left-bg.png');
+     background-image: url('../../assets/img/tab-left-bg.png');
      margin-left: -5px;
      .icon{
        @include backgroundImage(34px,34px);
        display: inline-block;
        vertical-align: middle;
        &.normal{
-        background-image: url('../assets/img/status_normal.png');
+        background-image: url('../../assets/img/status_normal.png');
        }
        &.abnormal{
-        background-image: url('../assets/img/status_abnormal.png');
+        background-image: url('../../assets/img/status_abnormal.png');
        }
      }
    }
    .battery-status{
      margin-right: -5px;
-     background-image: url('../assets/img/tab-left-bg.png');
+     background-image: url('../../assets/img/tab-left-bg.png');
      .icon{
        @include backgroundImage(51px,28px);
        display: inline-block;
        vertical-align: middle;
        &.battery-0-20{
-        background-image: url('../assets/img/0-20battery.png');
+        background-image: url('../../assets/img/0-20battery.png');
        }
        &.battery-20-50{
-        background-image: url('../assets/img/20-50battery.png');
+        background-image: url('../../assets/img/20-50battery.png');
        }
        &.battery-50-95{
-        background-image: url('../assets/img/50-95battery.png');
+        background-image: url('../../assets/img/50-95battery.png');
        }
        &.battery-95-100{
-        background-image: url('../assets/img/95-100battery.png');
+        background-image: url('../../assets/img/95-100battery.png');
        }
      }
    }
@@ -238,25 +238,25 @@ export default {
         margin: 0 auto;
         background-size: 118px 118px;
         &.location{
-          background-image: url('../assets/img/icon-location.png');
+          background-image: url('../../assets/img/icon-location.png');
         }
         &.relphone{
-          background-image: url('../assets/img/icon-relphone.png');
+          background-image: url('../../assets/img/icon-relphone.png');
         }
         &.limitrange{
-          background-image: url('../assets/img/icon-limitrange.png');
+          background-image: url('../../assets/img/icon-limitrange.png');
         }
         &.whitelist{
-          background-image: url('../assets/img/icon-whitelist.png');
+          background-image: url('../../assets/img/icon-whitelist.png');
         }
         &.disturb{
-          background-image: url('../assets/img/icon-disturb.png');
+          background-image: url('../../assets/img/icon-disturb.png');
         }
         &.sos{
-          background-image: url('../assets/img/icon-sos.png');
+          background-image: url('../../assets/img/icon-sos.png');
         }
         &.device{
-          background-image: url('../assets/img/icon-device.png');
+          background-image: url('../../assets/img/icon-device.png');
         }
        }
        .name{

@@ -176,7 +176,7 @@ export default {
             .icon{
                 display: inline-block;
                 @include backgroundImage(20px,24px);
-                background-image: url('../assets/img/location_white.png');
+                background-image: url('../../assets/img/location_white.png');
                 margin-top: -2px;
                 margin-right: 2px;
                 vertical-align: middle;
@@ -197,7 +197,7 @@ export default {
                 transform: translateY(-50%);
                 content: '';
                 @include backgroundImage(12px,20px);
-                background-image: url('../assets/img/arrow.png');
+                background-image: url('../../assets/img/arrow.png');
             }
         }
       }

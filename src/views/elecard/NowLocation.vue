@@ -85,7 +85,7 @@ export default {
       width: 76px;
       height: 76px;
       background-size: 76px 76px;
-      background-image: url('../assets/img/location-icon.png');
+      background-image: url('../../assets/img/location-icon.png');
     }
   }
   .message-wrap{
@@ -107,7 +107,7 @@ export default {
           width: 26px;
           height: 32px;
           background-size: 26px 32px;
-          background-image: url('../assets/img/location_blue.png');
+          background-image: url('../../assets/img/location_blue.png');
           vertical-align: middle;
         }
         .text{
