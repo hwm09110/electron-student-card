@@ -3,7 +3,7 @@ import Home from '../../views/score/Home'
 
 export default [
   {
-    path: '/score/home',
+    path: '/score/home/:examId',
     name: 'score_home',
     component: Home
   }
