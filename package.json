@@ -29,6 +29,7 @@
     "node-sass": "^4.9.0",
     "postcss-plugin-px2rem": "^0.8.1",
     "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.5.21",
+    "webpack-bundle-analyzer": "^3.0.4"
   }
 }

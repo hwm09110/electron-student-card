@@ -35,6 +35,8 @@ module.exports = {
             // 本地开发配置
         } else {
             // 生产开发配置
+            //分析打包后文件
+            config.plugin('webpack-bundle-analyzer').use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
         }
         // 这里是对环境的配置，不同环境对应不同的BASE_URL，以便axios的请求地址不同
         config.plugin('define').tap(args => {
