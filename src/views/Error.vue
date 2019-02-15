@@ -14,7 +14,7 @@ export default {
 .text{
   padding: 35px 0;
   text-align: center;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: normal;
 }
 </style>
