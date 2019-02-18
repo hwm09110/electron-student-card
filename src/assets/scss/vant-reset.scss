@@ -1,0 +1,22 @@
+/* 重置 vant tab 组件样式 */
+.van-tabs--line{
+  padding-top: 90px;
+}
+.van-tabs--line .van-tabs__wrap{
+  height: 90px;
+}
+.van-tab{
+  color: #333;
+  height: 90px;
+  line-height: 90px;
+  padding: 0 5px;
+  .van-ellipsis{
+    font-size: 28px;
+  }
+}
+.van-tab--active{
+  color: #47aefe;
+}
+.van-tabs__line{
+  background-color:#47aefe;
+}
