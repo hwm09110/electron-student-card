@@ -20,9 +20,9 @@ Vue.use(BaiduMap, {
 })
 
 //https://youzan.github.io/vant/#/zh-CN/intro
-import { DatetimePicker, Picker, Popup, Tab, Tabs, Toast, List } from 'vant';
+import { DatetimePicker, Picker, Popup, Tab, Tabs, Toast, List, PullRefresh  } from 'vant';
 
-Vue.use(Picker).use(DatetimePicker).use(Popup).use(Tab).use(Tabs).use(Toast).use(List);
+Vue.use(Picker).use(DatetimePicker).use(Popup).use(Tab).use(Tabs).use(Toast).use(List).use(PullRefresh);
 
 console.log(process.env.BASE_URL);
 

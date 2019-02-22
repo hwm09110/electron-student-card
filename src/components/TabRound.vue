@@ -2,7 +2,7 @@
   <div class="tab-round-wrap">
     <div class="tab-box">
         <div class="tab-item" 
-        :class="index == active?'tab-active':''" 
+        :class="index == itemActive?'tab-active':''" 
         v-for="(item,index) of tabItems"
         @click="handleClick(index)" 
         :key="index">{{item}}</div>
@@ -26,12 +26,10 @@ export default {
   name: 'TabRound',
   data() {
     return {
-      active: this.itemActive
     }
   },
   methods: {
     handleClick(index) {
-      this.active = index;
       this.$emit('update:itemActive',index);
       this.$emit('on-tab-item-click',index);
     }

@@ -104,7 +104,7 @@ module.exports = {
         https: false,
         hotOnly: false,
         proxy: {
-            '/htoa/*': {
+            '/ydzt/*': {
                 target: 'http://192.168.8.172:16619',
                 ws: true,
                 changOrigin: true

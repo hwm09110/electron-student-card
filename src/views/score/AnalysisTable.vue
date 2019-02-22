@@ -1,6 +1,6 @@
 <template>
   <div class="analysis-wrap">
-    <van-tabs v-model="tabActive">
+    <van-tabs v-model="tabActive" @change="handleTabChange">
       <van-tab :title="item" v-for="(item,index) of courses" :key="index"></van-tab>
     </van-tabs>
     <div class="table-content">
@@ -15,23 +15,11 @@
             <th>得分</th>
             <th>得分率</th>
           </tr>
-          <tr>
-            <td>文言文实词</td>
-            <td>2</td>
-            <td>5</td>
-            <td>85%</td>
-          </tr>
-          <tr>
-            <td>文言文实词</td>
-            <td>2</td>
-            <td>5</td>
-            <td>85%</td>
-          </tr>
-          <tr>
-            <td>文言文实词</td>
-            <td>2</td>
-            <td>5</td>
-            <td>85%</td>
+          <tr v-for="(item,index) of tableData" :key="index">
+            <td>{{item.name}}</td>
+            <td>{{item.num}}</td>
+            <td>{{item.score}}</td>
+            <td>{{item.rate}}</td>
           </tr>
         </tbody>
       </table>
@@ -42,6 +30,7 @@
 
 <script>
 import TabRound from '@c/TabRound';
+import request from '@/request';
 export default {
   name: 'AnalysisTable',
   components: {
@@ -52,14 +41,52 @@ export default {
       tabActive: 0,
       courses: ['语文','数学','英语','物理','化学','生物','政治','历史','地理'],
       tabLists: ['知识点','认知水平'],
-      tabRoundActive: 0
+      tabRoundActive: 0,
+      ex_id: 0, //考试id
+      y_kaohao: 0, //学生考号
+      checked_course: '', //选中科目
+      type:1, //1知识点  2认知水平
+      tableData: []
     }
   },
   watch: {
     tabRoundActive(newVal,oldVal) {
-      console.log(newVal)
-      console.log(oldVal)
+      this.type = newVal + 1
     }
+  },
+  methods: {
+    //切换tab
+    handleTabChange(index) {
+      console.log(index);
+      this.checked_course = this.courses[index];
+      this.tabRoundActive = 0;
+      this.getSummary()
+    },
+    getSummary() {
+      let params = {
+        y_kaohao: this.ex_id, //学生考号
+        ex_id: this.y_kaohao, //考试id
+        subject_name: this.checked_course, //科目名称
+        type: this.type
+      };
+      request.getSummary(params)
+      .then(res => {
+        console.log(res);
+        if(res.code == 200){
+          this.tableData = res.extraData
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  },
+  created() {
+    this.ex_id = this.$route.params.ex_id
+    this.y_kaohao = this.$route.params.y_kaohao
+    this.courses = this.$store.state.subject_list
+    this.checked_course = this.courses[0]
+    this.getSummary()
   }
 }
 </script>

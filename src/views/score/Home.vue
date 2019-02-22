@@ -1,63 +1,66 @@
 <template>
   <div class="score-home">
-    <div class="exam-item">
-      <h2 class="exam-name">宏途第一实验中学2019年1月测考</h2>
-      <div class="exam-time">考试时间：2019-02-14</div>
-      <div class="total-score-box">
-        <div class="total-score">
-          <div class="score">
-            <div class="label">总成绩</div>
-            <div class="val">568<span class="unit">分</span></div>
+    <van-pull-refresh v-model="isRefreshLoading" @refresh="onRefresh" :disabled="true">
+      <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          :error.sync="error"
+          error-text="请求失败，点击重新加载"
+          :immediate-check="false"
+          @load="onLoad"
+        >
+        <div class="exam-item" v-for="(item,index) in examList" :key="index">
+          <h2 class="exam-name">{{item.ex_name}}</h2>
+          <div class="exam-time">考试时间：{{item.ex_time}}</div>
+          <div class="total-score-box">
+            <div class="total-score">
+              <div class="score">
+                <div class="label">总成绩</div>
+                <div class="val">{{item.score}}<span class="unit">分</span></div>
+              </div>
+              <div class="ranking">
+                <div class="label">排名</div>
+                <div class="val">{{item.rank}}</div>
+              </div>
+            </div>
           </div>
-          <div class="ranking">
-            <div class="label">排名</div>
-            <div class="val">13</div>
+          <div class="course-list-box">
+            <div class="course-item" v-for="(score,key,index) of item.subject_info" :key="index">
+              <span class="name">{{key}}</span>
+              <span class="score">{{score}}分</span>
+            </div>
+          </div>
+          <div class="operate-box">
+            <button @click="handleClick1(item)">试题解析</button>
+            <button @click="handleClick2(item)">成绩分析</button>
           </div>
         </div>
-      </div>
-      <div class="course-list-box">
-        <div class="course-item">
-          <span class="name">语文</span>
-          <span class="score">115分</span>
-        </div>
-        <div class="course-item">
-          <span class="name">数学</span>
-          <span class="score">105分</span>
-        </div>
-        <div class="course-item">
-          <span class="name">英语</span>
-          <span class="score">110分</span>
-        </div>
-        <div class="course-item">
-          <span class="name">物理</span>
-          <span class="score">89分</span>
-        </div>
-        <div class="course-item">
-          <span class="name">化学</span>
-          <span class="score">82分</span>
-        </div>
-      </div>
-      <div class="operate-box">
-        <button @click="handleClick1()">试题解析</button>
-        <button @click="handleClick2()">成绩分析</button>
-      </div>
-    </div>
+      </van-list>
+    </van-pull-refresh>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { ImagePreview } from 'vant';
+import request from '@/request';
 export default {
   name: 'Home',
   components: {
   },
   data () {
     return {
+      examList: [],
+      loading: false,
+      finished: false,
+      error: false,
+      hasSetError: false,
+      isRefreshLoading: false,
+      page: 1
     }
   },
   methods: {
-    handlePreview () {
+    handlePreview() {
       ImagePreview({
         images: [
           'https://img.yzcdn.cn/public_files/2017/09/05/3bd347e44233a868c99cf0fe560232be.jpg',
@@ -67,12 +70,83 @@ export default {
         showIndex:false
       });
     },
-    handleClick1 () {
-      this.$router.push({name:'score_analysis'})
+    //试题解析
+    handleClick1(item) {
+      let courses = this.getCourses(item.subject_info)
+      this.$store.commit('set_subject',courses)
+
+      let params = {
+        ex_id: item.ex_id,
+        y_kaohao: item.y_kaohao
+      };
+      this.$router.push({name:'score_analysis',params:params})
     },
-    handleClick2 () {
-      this.$router.push({name:'score_analysis_table'})
+    //成绩分析
+    handleClick2(item) {
+      let courses = this.getCourses(item.subject_info)
+      this.$store.commit('set_subject',courses)
+      
+      let params = {
+        ex_id: item.ex_id,
+        y_kaohao: item.y_kaohao
+      };
+      this.$router.push({name:'score_analysis_table',params:params})
+    },
+    onLoad() {
+      // setTimeout(()=>{
+      //   if (this.examList.length == 30 && !this.hasSetError) {
+      //     this.error = true;
+      //     this.hasSetError = true;
+      //   }
+      //   for(let i = 0; i < 10; i++){
+      //     this.examList.push(this.examList.length + 1)
+      //   }
+      //   // 加载状态结束
+      //   this.loading = false;
+
+      //   // 数据全部加载完成
+      //   if (this.examList.length >= 50) {
+      //     this.finished = true;
+      //   }
+      // },1500);
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.$toast('刷新成功');
+        this.examList = [];
+        for(let i = 0; i < 10; i++){
+          this.examList.push(this.examList.length + 1)
+        }
+        this.isRefreshLoading = false;
+      }, 10000);
+    },
+    getExamList(page) {
+      let params = {
+        stu_guid:this.$store.state.stu_guid,
+        page:page
+      };
+      request.getExamList(params)
+      .then(res => {
+        console.log(res);
+        if(res.code == 200){
+          this.examList = res.extraData;
+        }
+        this.loading = false;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    getCourses(courseObj) {
+      let courses = [];
+      for (const p in courseObj) {
+        courses.push(p)
+      }
+      return courses;
     }
+  },
+  created() {
+    this.getExamList(this.page);
   }
 }
 </script>

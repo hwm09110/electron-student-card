@@ -9,6 +9,7 @@
     width: 100%;
     height: 100%;
     background-color: #efeff4;
+    overflow: auto;
   }
   #app{
     max-width: 750px;
