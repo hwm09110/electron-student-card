@@ -4,6 +4,9 @@ import Qs from 'qs';
 //获取考试列表
 const getExamList = (params) => http.get('/ydzt/web_chengji/index',{params}).then(res => res.data);
 
+//获取科目
+const getCourse = (params) => http.get('/ydzt/web_chengji/subject',{params}).then(res => res.data);
+
 //获取试题
 const getQuestList = (params) => http.get('/ydzt/web_chengji/analysis',{params}).then(res => res.data);
 
@@ -16,6 +19,7 @@ const getSummary = (params) => http.get('/ydzt/web_chengji/summary',{params}).th
 
 export default {
     getExamList,
+    getCourse,
     getQuestList,
     getAllstupaper,
     getSummary

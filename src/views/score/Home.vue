@@ -72,43 +72,25 @@ export default {
     },
     //试题解析
     handleClick1(item) {
-      let courses = this.getCourses(item.subject_info)
-      this.$store.commit('set_subject',courses)
-
       let params = {
         ex_id: item.ex_id,
-        y_kaohao: item.y_kaohao
+        kaohao: item.y_kaohao
       };
       this.$router.push({name:'score_analysis',params:params})
     },
     //成绩分析
     handleClick2(item) {
-      let courses = this.getCourses(item.subject_info)
-      this.$store.commit('set_subject',courses)
-      
       let params = {
         ex_id: item.ex_id,
-        y_kaohao: item.y_kaohao
+        kaohao: item.y_kaohao
       };
       this.$router.push({name:'score_analysis_table',params:params})
     },
+    //滚动加载更多
     onLoad() {
-      // setTimeout(()=>{
-      //   if (this.examList.length == 30 && !this.hasSetError) {
-      //     this.error = true;
-      //     this.hasSetError = true;
-      //   }
-      //   for(let i = 0; i < 10; i++){
-      //     this.examList.push(this.examList.length + 1)
-      //   }
-      //   // 加载状态结束
-      //   this.loading = false;
-
-      //   // 数据全部加载完成
-      //   if (this.examList.length >= 50) {
-      //     this.finished = true;
-      //   }
-      // },1500);
+      // if(this.loading) return;
+      this.page = this.page + 1;
+      this.getExamList(this.page)
     },
     onRefresh() {
       setTimeout(() => {
@@ -122,27 +104,25 @@ export default {
     },
     getExamList(page) {
       let params = {
-        stu_guid:this.$store.state.stu_guid,
+        stu_guid:this.$store.state.score.stu_guid,
         page:page
       };
       request.getExamList(params)
       .then(res => {
         console.log(res);
         if(res.code == 200){
-          this.examList = res.extraData;
+          let data = res.extraData;
+          if(data.length == 0){
+            this.loading = false;
+            this.finished = true;
+            return;
+          }
+          this.examList.push(...res.extraData)
         }
-        this.loading = false;
       })
       .catch(error => {
         console.log(error);
       })
-    },
-    getCourses(courseObj) {
-      let courses = [];
-      for (const p in courseObj) {
-        courses.push(p)
-      }
-      return courses;
     }
   },
   created() {

@@ -5,7 +5,7 @@
     </van-tabs>
     <div class="table-content">
       <div class="tab-wrap">
-        <TabRound :tabItems="tabLists" :itemActive.sync="tabRoundActive"></TabRound>
+        <TabRound :tabItems="tabLists" :itemActive.sync="tabRoundActive" @on-tab-item-click="handleTabRoundClick"></TabRound>
       </div>
       <table class="table">
         <tbody>
@@ -31,6 +31,7 @@
 <script>
 import TabRound from '@c/TabRound';
 import request from '@/request';
+import { mapActions } from 'vuex';
 export default {
   name: 'AnalysisTable',
   components: {
@@ -50,16 +51,20 @@ export default {
     }
   },
   watch: {
-    tabRoundActive(newVal,oldVal) {
-      this.type = newVal + 1
-    }
   },
   methods: {
-    //切换tab
+    ...mapActions(['getCourse']),
+    //切换科目tab
     handleTabChange(index) {
       console.log(index);
       this.checked_course = this.courses[index];
       this.tabRoundActive = 0;
+      this.type = 1;
+      this.getSummary()
+    },
+    //切换知识点、认知水平
+    handleTabRoundClick(index) {
+      this.type = index + 1
       this.getSummary()
     },
     getSummary() {
@@ -83,10 +88,14 @@ export default {
   },
   created() {
     this.ex_id = this.$route.params.ex_id
-    this.y_kaohao = this.$route.params.y_kaohao
-    this.courses = this.$store.state.subject_list
-    this.checked_course = this.courses[0]
-    this.getSummary()
+    this.y_kaohao = this.$route.params.kaohao
+    
+    this.getCourse({y_kaohao:this.y_kaohao,ex_id:this.ex_id}).then(()=>{
+      console.log('finish')
+      this.courses = this.$store.state.score.subject_list
+      this.checked_course = this.courses[0]
+      this.getSummary()
+    })
   }
 }
 </script>

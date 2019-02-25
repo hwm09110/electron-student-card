@@ -97,12 +97,12 @@ module.exports = {
     },
     devServer: {
         open: false,
-        host: '192.168.8.172',
         // host: '192.168.0.101',
-        // host: '127.0.0.1',
+        host: '192.168.8.172',
         port: 9000,
         https: false,
         hotOnly: false,
+        disableHostCheck: true,
         proxy: {
             '/ydzt/*': {
                 target: 'http://192.168.8.172:16619',

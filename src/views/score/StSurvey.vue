@@ -23,6 +23,7 @@
 
 <script>
 import request from '@/request';
+import { mapActions } from 'vuex';
 export default {
   name: 'StSurvey',
   data() {
@@ -36,6 +37,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getCourse']),
     //切换tab
     handleTabChange(index) {
       console.log(index);
@@ -64,11 +66,15 @@ export default {
   },
   created() {
     this.ex_id = this.$route.params.ex_id
-    this.y_kaohao = this.$route.params.y_kaohao
-    this.courses = this.$store.state.subject_list
-    this.checked_course = this.courses[0]
+    this.y_kaohao = this.$route.params.kaohao
+    this.checked_course = this.$route.params.subject_name
 
-    this.getAllstupaper(this.page)
+    this.getCourse({y_kaohao:this.y_kaohao,ex_id:this.ex_id}).then(()=>{
+      console.log('finish')
+      this.courses = this.$store.state.score.subject_list
+      this.checked_course = this.courses[0]
+      this.getAllstupaper(this.page)
+    })
   }
 }
 </script>

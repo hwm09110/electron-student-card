@@ -11,17 +11,17 @@ export default [
     component: Home
   },
   {
-    path: '/score/analysis',
+    path: '/score/analysis/:ex_id/:kaohao',
     name: 'score_analysis',
     component: StAnalysis
   },
   {
-    path: '/score/survey',
+    path: '/score/survey/:ex_id/:kaohao',
     name: 'score_survey',
     component: StSurvey
   },
   {
-    path: '/score/analysisTable',
+    path: '/score/analysisTable/:ex_id/:kaohao',
     name: 'score_analysis_table',
     component: AnalysisTable
   }
