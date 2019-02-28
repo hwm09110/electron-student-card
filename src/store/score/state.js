@@ -4,7 +4,7 @@
  */
 
 const state = {
-  stu_guid: 'ha6195af1c3f52G47736528',
+  stu_guid: 'sc6fc16e258a21Z01665637',
   subject_list: [],
 };
 

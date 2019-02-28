@@ -8,6 +8,7 @@
           :error.sync="error"
           error-text="请求失败，点击重新加载"
           :immediate-check="false"
+          :offset="100"
           @load="onLoad"
         >
         <div class="exam-item" v-for="(item,index) in examList" :key="index">
@@ -36,6 +37,7 @@
             <button @click="handleClick2(item)">成绩分析</button>
           </div>
         </div>
+        <div class="message-tips" v-if="examList.length == 0">{{resMessage}}</div>
       </van-list>
     </van-pull-refresh>
   </div>
@@ -56,6 +58,7 @@ export default {
       error: false,
       hasSetError: false,
       isRefreshLoading: false,
+      resMessage: '',//接口返回的错误信息
       page: 1
     }
   },
@@ -88,7 +91,6 @@ export default {
     },
     //滚动加载更多
     onLoad() {
-      // if(this.loading) return;
       this.page = this.page + 1;
       this.getExamList(this.page)
     },
@@ -104,7 +106,7 @@ export default {
     },
     getExamList(page) {
       let params = {
-        stu_guid:this.$store.state.score.stu_guid,
+        stu_guid:this.$route.query.stu_guid||this.$store.state.score.stu_guid,
         page:page
       };
       request.getExamList(params)
@@ -117,11 +119,16 @@ export default {
             this.finished = true;
             return;
           }
-          this.examList.push(...res.extraData)
+          this.examList.push(...data)
+        }else{
+          this.examList = [];
+          this.resMessage = res.message;
         }
       })
       .catch(error => {
         console.log(error);
+        this.loading = false
+        this.error = true
       })
     }
   },
@@ -213,6 +220,12 @@ export default {
       box-shadow: 0 3px 10px 1px rgba(0,0,0,0.2);
     }
   }
+}
+.message-tips{
+  font-size:26px;
+  color:#666;
+  padding:40px 0;
+  text-align:center;
 }
 </style>
 

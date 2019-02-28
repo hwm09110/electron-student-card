@@ -5,67 +5,67 @@ import DeviceInfo from '../../views/elecard/DeviceInfo'
 
 export default [
   {
-    path: '/',
+    path: '/eleccard/index',
     name: 'index',
     component: Index
   },
   {
-    path: '/nowlocation',
+    path: '/eleccard/nowlocation',
     name: 'nowlocation',
     component: NowLocation
   },
   {
-    path: '/limitrange',
+    path: '/eleccard/limitrange',
     name: 'limitrange',
     component: () => import(/* webpackChunkName: "limitrange" */ '../../views/elecard/LimitRange.vue')
   },
   {
-    path: '/setlimitrange',
+    path: '/eleccard/setlimitrange',
     name: 'setlimitrange',
     component: () => import(/* webpackChunkName: "setlimitrange" */ '../../views/elecard/SetLimitRange.vue')
   },
   {
-    path: '/addlimitrange',
+    path: '/eleccard/addlimitrange',
     name: 'addlimitrange',
     component: () => import(/* webpackChunkName: "setlimitrange" */ '../../views/elecard/AddLimitRange.vue')
   },
   {
-    path: '/relphone',
+    path: '/eleccard/relphone',
     name: 'relphone',
     component: () => import(/* webpackChunkName: "relphone" */ '../../views/elecard/RelPhone.vue')
   },
   {
-    path: '/addrelphone',
+    path: '/eleccard/addrelphone',
     name: 'addrelphone',
     component: () => import(/* webpackChunkName: "relphone" */ '../../views/elecard/AddRelPhone.vue')
   },
   {
-    path: '/whiteList',
+    path: '/eleccard/whiteList',
     name: 'whitelist',
     component: () => import(/* webpackChunkName: "whiteList" */ '../../views/elecard/WhiteList.vue')
   },
   {
-    path: '/addwhitephone',
+    path: '/eleccard/addwhitephone',
     name: 'addwhitephone',
     component: () => import(/* webpackChunkName: "whiteList" */ '../../views/elecard/AddWhitePhone.vue')
   },
   {
-    path: '/bandisturb',
+    path: '/eleccard/bandisturb',
     name: 'bandisturb',
     component: () => import(/* webpackChunkName: "bandisturb" */ '../../views/elecard/BanDisturb.vue')
   },
   {
-    path: '/setbandisturb',
+    path: '/eleccard/setbandisturb',
     name: 'setbandisturb',
     component: () => import(/* webpackChunkName: "bandisturb" */ '../../views/elecard/SetBanDisturb.vue')
   },
   {
-    path: '/sos',
+    path: '/eleccard/sos',
     name: 'sos',
     component: () => import(/* webpackChunkName: "bandisturb" */ '../../views/elecard/Sos.vue')
   },
   {
-    path: '/deviceinfo',
+    path: '/eleccard/deviceinfo',
     name: 'deviceinfo',
     component: DeviceInfo
   }

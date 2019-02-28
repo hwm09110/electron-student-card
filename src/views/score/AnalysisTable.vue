@@ -21,6 +21,9 @@
             <td>{{item.score}}</td>
             <td>{{item.rate}}</td>
           </tr>
+          <tr>
+            <td colspan="4" v-if="tableData.length == 0">{{resMessage}}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -47,7 +50,8 @@ export default {
       y_kaohao: 0, //学生考号
       checked_course: '', //选中科目
       type:1, //1知识点  2认知水平
-      tableData: []
+      tableData: [],
+      resMessage: '' //接口返回的错误信息
     }
   },
   watch: {
@@ -69,8 +73,8 @@ export default {
     },
     getSummary() {
       let params = {
-        y_kaohao: this.ex_id, //学生考号
-        ex_id: this.y_kaohao, //考试id
+        y_kaohao: this.y_kaohao, //学生考号
+        ex_id: this.ex_id, //考试id
         subject_name: this.checked_course, //科目名称
         type: this.type
       };
@@ -79,6 +83,9 @@ export default {
         console.log(res);
         if(res.code == 200){
           this.tableData = res.extraData
+        }else{
+          this.tableData = [];
+          this.resMessage = res.message;
         }
       })
       .catch(error => {
@@ -132,7 +139,6 @@ export default {
         background-color: #f5f5f9;
         font-weight: blod;
       }
-      td{}
     }
   }
 }
