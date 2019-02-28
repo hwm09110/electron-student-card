@@ -6,8 +6,9 @@ import store from './store'
 // 百度地图 https://dafrok.github.io/vue-baidu-map/#/
 import BaiduMap from 'vue-baidu-map'
 
+
 // import 'lib-flexible'
-import '@/assets/css/reset.css'
+//import '@/assets/css/reset.css'
 import setRem from '@/assets/js/rem.js'
 
 setRem();

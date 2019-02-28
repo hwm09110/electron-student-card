@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import ElecardRouterList from './elecard'
 import ScoreRouterList from './score'
+import MicrowebsiteRouterList from './microwebsite'
 import Error from '../views/Error'
 
 
@@ -16,6 +17,7 @@ const router = new Router({
     },
     ...ElecardRouterList,
     ...ScoreRouterList,
+    ...MicrowebsiteRouterList,
     {
       path: '*',
       name: '404',
