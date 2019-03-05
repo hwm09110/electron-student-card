@@ -35,8 +35,12 @@ http.interceptors.request.use( config => {
 //添加相应拦截器
 http.interceptors.response.use(res => {
   // console.log(res);
-  //非登录下
-  if(res.data && res.data.code === '9000'){
+  //code非200
+  if(res.data && res.data.code !== '200'){
+    Toast({
+      position: 'bottom',
+      message: res.data.message
+    });
     return Promise.reject(res.data.message);
   }
   return res;
