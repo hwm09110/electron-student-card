@@ -4,7 +4,8 @@
       :is-bottom-bounce="isBounce"
       @infinite-scroll="loadMore">
   <div class="home-wrap">
-    <van-tabs 
+    <van-tabs
+      v-if="categorys.length"
       v-model="tabActive"
       :line-width="20"
       :swipe-threshold="3.5"
@@ -17,7 +18,7 @@
     <div class="banner-wrap" v-if="swiperSlides.length">
       <swiper :options="swiperOption" ref="mySwiper" v-if="swiperSlides.length">
         <swiper-slide v-for="(item, index) in swiperSlides" :key="index">
-          <img :src="imgDomain+item.title_img" alt="banner">
+          <img :src="imgDomain+item.title_img" alt="banner" @click="handleOpenNewsDetail(item)">
           <div class="img-title">{{item.title}}</div>
         </swiper-slide>
       </swiper>
@@ -26,17 +27,18 @@
     <div class="main-container">
       <div class="news-list-box">
         <div v-for="(item,index) of newsData" :key="index">
-          <div class="three-img-item" v-if="item.model == 2">
+          <div class="three-img-item" v-if="item.type == 2" @click="handleOpenNewsDetail(item)">
             <div class="title-box">{{item.title}}</div>
             <div class="horizontal-image-box">
               <div class="image-item" v-for="(img,img_index) of item.title_img" :key="img_index">
-                <img :src="imgDomain+img.title_img" alt="img">
+                <img :src="imgDomain+img" alt="img">
               </div>
             </div>
           </div>
-          <div class="news-item" @click="handleNewsItemClick" v-else>
+          <div class="news-item" @click="handleOpenNewsDetail(item)" v-else>
             <div class="news-img">
-              <img :src="imgDomain+item.title_img[0]" alt="img">
+              <img :src="imgDomain+item.title_img[0]" alt="img" v-if="item.title_img[0]">
+              <div class="defalut-img" v-else></div>
             </div>
             <div class="news-content">
               <div class="title">{{item.title}}</div>
@@ -45,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="nodata-tips" v-if="newsData.length == 0">没有相关新闻</div>
+      <div class="nodata-tips" v-show="nodataTipShow || categorys.length == 0">没有相关新闻</div>
     </div>
     <!-- news detail popup sart -->
     <van-popup v-model="popupShow" position="right" :overlay="false" style="width:100%;height:100%;">
@@ -98,6 +100,7 @@
 
 <script>
 import request from '@/request';
+import { IMGDOMAIN, WEBDOMAIN } from '@/assets/js/config';
 //vue-awesome-swiper https://github.com/surmon-china/vue-awesome-swiper
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
@@ -143,11 +146,12 @@ export default {
         //   insert_time: 1551775829,
         // }
       ],
+      nodataTipShow:false,
       page: 1, //新闻列表页码
-      isLoading: false, //正在加载中
-      isFinish: false, //所有数据加载完
+      isLoading: false, //是否正在加载中
+      isFinish: false, //是否所有数据加载完
       isBounce: false, //是否启用下拉回弹效果
-      imgDomain: 'http://192.168.8.90' //图片域名
+      imgDomain: IMGDOMAIN //图片域名
     }
   },
   computed: {
@@ -161,6 +165,9 @@ export default {
     handleTabChange(activeIndex) {
       this.selected_category = this.categorys[activeIndex]['col_guid']
       this.page = 1
+      this.isFinish = false
+      this.isLoading = true
+      this.newsData = []
       this.getNewsBanner().then(() => {
         this.getNewsList()
       })
@@ -169,39 +176,86 @@ export default {
     handleNewsItemClick() {
       this.popupShow = true
     },
+    //打开新闻详情（调原生方法）
+    handleOpenNewsDetail(item) {
+      let u = navigator.userAgent,
+          isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+          isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+      let news_guid = item.news_guid
+      let url = `${WEBDOMAIN}/ydzt/web_parentnews/vdetail?news_guid=${news_guid}`
+      console.log(url)
+      if(isAndroid) {
+          // window.js_bkdx.exit()
+      }else if(isiOS) {
+          window.webkit.messageHandlers.openNewsDetail.postMessage(url)            
+      }
+    },
     loadMore () {
       if(this.isLoading || this.isFinish) return
       this.page = this.page + 1
       this.isLoading = true
+      this.getNewsList()
     },
     //拉取新闻栏目
     getNewsColumn () {
       let params = {sch_guid:this.sch_guid}
       return request.getNewsCategory(params).then((res) => {
-        this.categorys = res.extraData
+        if(res.code == 200){
+          this.categorys = res.extraData
+        }else{
+          this.$toast({
+            position: 'bottom',
+            message: res.message
+          })
+        }
       })
     },
     //拉取banner
     getNewsBanner () {
       let params = {sch_guid:this.sch_guid,col_guid:this.selected_category}
       return request.getNewsBannerList(params).then((res) => {
-        console.log(res)
-        this.swiperOption.loopedSlides = res.extraData.length
-        this.swiperOption.loop = res.extraData.length > 1?true:false
-        this.swiperSlides = res.extraData
+        if(res.code == 200){
+          this.swiperOption.loopedSlides = res.extraData.length
+          this.swiperOption.loop = res.extraData.length > 2?true:false
+          this.swiperSlides = res.extraData
+        }else{
+          this.$toast({
+            position: 'bottom',
+            message: res.message
+          })
+        }
       })
     },
     //拉取新闻列表
     getNewsList () {
-      let params = {sch_guid:this.sch_guid,col_guid:this.selected_category}
+      let params = {sch_guid:this.sch_guid,col_guid:this.selected_category,page:this.page}
+      this.nodataTipShow = false
       return request.getNewsList(params).then((res) => {
         console.log(res)
-        this.newsData = res.extraData
+        this.isLoading = false
+        if(res.code == 200){
+          if(res.extraData.length > 0){
+            this.newsData.push(...res.extraData)
+          }else{
+            if(this.page > 1){
+              this.isFinish = true
+            }
+            if(this.page == 1){
+              this.nodataTipShow = true
+            }
+          }
+        }else{
+          this.$toast({
+            position: 'bottom',
+            message: res.message
+          })
+        }
       })
     },
     //获取选中栏目guid
     getActiveTabGuid () {
-      this.selected_category = this.categorys[this.tabActive]['col_guid']
+      this.selected_category = this.categorys.length > 0 && this.categorys[this.tabActive]?this.categorys[this.tabActive]['col_guid']:''
     }
   },
   created() {
@@ -210,9 +264,13 @@ export default {
   mounted() {
     this.getNewsColumn().then(() => {
       this.getActiveTabGuid()
-      return this.getNewsBanner()
+      if(this.selected_category){
+        return this.getNewsBanner()
+      }
     }).then(() => {
-      this.getNewsList()
+      if(this.selected_category){
+        this.getNewsList()
+      }
     })
   }
 }
@@ -224,6 +282,7 @@ export default {
   .banner-wrap{
     background-color:#fff;
     padding:24px 0;
+    height: 300px;
   }
   .main-container{
     padding:0 20px 20px;
@@ -242,6 +301,11 @@ export default {
           img{
             width: 100%;
             height: 100%;
+          }
+          .defalut-img{
+            width: 100%;
+            height: 100%;
+            background-color: #EFEFF5;
           }
         }
         .news-content{
@@ -285,6 +349,10 @@ export default {
             margin-right: 42px;
             &:last-child{
               margin-right: 0;
+            }
+            img{
+              width: 100%;
+              height: 100%;
             }
           }
         }

@@ -127,8 +127,8 @@ export default {
       })
       .catch(error => {
         console.log(error);
-        this.loading = false
-        this.error = true
+        // this.loading = false
+        // this.error = true
       })
     }
   },
@@ -218,6 +218,7 @@ export default {
     button{
       @include blueButton(309px,80px);
       box-shadow: 0 3px 10px 1px rgba(0,0,0,0.2);
+      border:none;
     }
   }
 }
