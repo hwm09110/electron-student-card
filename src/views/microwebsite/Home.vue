@@ -186,7 +186,7 @@ export default {
       let url = `${WEBDOMAIN}/ydzt/web_parentnews/vdetail?news_guid=${news_guid}`
       console.log(url)
       if(isAndroid) {
-          // window.js_bkdx.exit()
+          window.js_campus.gotoPage(url)
       }else if(isiOS) {
           window.webkit.messageHandlers.openNewsDetail.postMessage(url)            
       }
