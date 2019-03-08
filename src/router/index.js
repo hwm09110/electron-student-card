@@ -28,8 +28,10 @@ const router = new Router({
 
 //全局前置导航守卫
 router.beforeEach((to,from,next)=>{
-  // console.log('to',to)
-  // console.log('from',from)
+  let title = to.meta.title
+  if(title){
+    document.title = title
+  }
   window.scrollTo(0,0)
   next()
 })

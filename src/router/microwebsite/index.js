@@ -6,6 +6,7 @@ export default [
   {
     path: '/microwebsite/home',
     name: 'microwebsite_home',
-    component: Home
+    component: Home,
+    meta:{title:'微官网'}
   },
 ]

@@ -168,6 +168,7 @@ export default {
       this.isFinish = false
       this.isLoading = true
       this.newsData = []
+      this.swiperSlides = []
       this.getNewsBanner().then(() => {
         this.getNewsList()
       })
@@ -185,10 +186,11 @@ export default {
       let news_guid = item.news_guid
       let url = `${WEBDOMAIN}/ydzt/web_parentnews/vdetail?news_guid=${news_guid}`
       console.log(url)
-      if(isAndroid) {
-          window.js_campus.gotoPage(url)
-      }else if(isiOS) {
-          window.webkit.messageHandlers.openNewsDetail.postMessage(url)            
+      if(isiOS) {
+        window.webkit.messageHandlers.openNewsDetail.postMessage(url)            
+      }else if(isAndroid) {
+          window.js_bkdx.gotoUrlPage(url)
+          // window.js_campus.exit()
       }
     },
     loadMore () {

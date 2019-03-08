@@ -8,21 +8,25 @@ export default [
   {
     path: '/score/home',
     name: 'score_home',
-    component: Home
+    component: Home,
+    meta:{title:'成绩列表'}
   },
   {
     path: '/score/analysis/:ex_id/:kaohao',
     name: 'score_analysis',
-    component: StAnalysis
+    component: StAnalysis,
+    meta:{title:'试题解析'}
   },
   {
     path: '/score/survey/:ex_id/:kaohao',
     name: 'score_survey',
-    component: StSurvey
+    component: StSurvey,
+    meta:{title:'题目概况'}
   },
   {
     path: '/score/analysisTable/:ex_id/:kaohao',
     name: 'score_analysis_table',
-    component: AnalysisTable
+    component: AnalysisTable,
+    meta:{title:'成绩分析'}
   }
 ]
